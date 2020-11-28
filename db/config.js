@@ -12,7 +12,7 @@ const dbConnection = async()=>{
         console.log("DB online");
     }
     catch(error){
-            console.log("error en la BD");
+            console.log("error en la BD "+error);
     }
 
 }
