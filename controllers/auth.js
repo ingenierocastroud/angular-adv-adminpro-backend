@@ -2,6 +2,7 @@ const {response} = require('express');
 const Usuario = require('../models/usuario');
 const bcrypt = require('bcryptjs');
 const {generarToken} = require('../helpers/jwt');
+const {googleVerify} = require('../helpers/google-verify');
 
 
 const login = async (req,res=response)=>{
@@ -25,7 +26,38 @@ const login = async (req,res=response)=>{
     }
 }
 
+const loginGoogle = async (req,res=response)=>{
+    try{
+        const {token}=req.body;
+        const {name,email,picture} = await googleVerify(token);
+        const usuarioDB = await Usuario.findOne({email});
+        let usuario;
+        if (!usuarioDB){
+            usuario=new Usuario({
+                    nombre:name ,
+                    email,
+                    img:picture,
+                    password:'@@@',
+                    google:true
+                }                
+            )
+        }
+        else{
+            usuario=usuarioDB;
+            usuario.google=true;
+        }
+
+        await usuario.save();
+        console.log(usuario);
+        const tokenApp =await generarToken(usuario.id);
+        return res.status(200).json({ok:true,token:tokenApp});
+    }
+    catch(error){
+        return res.status(500).json({ok:false,msg:"ocurrio un error"});
+    }
+}
+
 
 module.exports ={
-login
+    login,loginGoogle
 }
