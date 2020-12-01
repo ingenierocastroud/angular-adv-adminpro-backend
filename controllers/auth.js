@@ -48,7 +48,7 @@ const loginGoogle = async (req,res=response)=>{
         }
 
         await usuario.save();
-        console.log(usuario);
+        //generar token
         const tokenApp =await generarToken(usuario.id);
         return res.status(200).json({ok:true,token:tokenApp});
     }
@@ -57,7 +57,18 @@ const loginGoogle = async (req,res=response)=>{
     }
 }
 
+const renewToken = async (req,res=response)=>{
+    try{
+        const uid=req.uid;
+        const token =await generarToken(uid);
+        return res.status(200).json({ok:true,token});
+    }
+    catch(error){
+        return res.status(500).json({ok:false,msg:"ocurrio un error"});
+    }
+}
+
 
 module.exports ={
-    login,loginGoogle
+    login,loginGoogle,renewToken
 }

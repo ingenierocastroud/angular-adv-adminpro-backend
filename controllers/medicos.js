@@ -34,7 +34,7 @@ const getMedicos = async (req,res)=>{
 const actualizarMedico = async (req,res)=>{
     try{
         const id=req.params.id;
-        const {password,google,...campos}=req.body;
+        const {...campos}=req.body;
 
         const medicoDB= await Medico.findById(id);
         if (!medicoDB){

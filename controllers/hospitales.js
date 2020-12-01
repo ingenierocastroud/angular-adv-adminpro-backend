@@ -31,15 +31,15 @@ const getHospitales = async (req,res)=>{
 
 const actualizarHospital = async (req,res)=>{
     try{
-        const uid=req.params.id;
-        const {password,google,...campos}=req.body;
+        const id=req.params.id;
+        const campos={...req.body};
 
-        const hospitalDB= await Hospital.findById(uid);
+        const hospitalDB= await Hospital.findById(id);
         if (!hospitalDB){
             return res.status(404).json({ok:false,msg:"No existe hospital"});           
         }
      
-        const hospitalCambio= await Hospital.findByIdAndUpdate(uid,campos,{new:true});
+        const hospitalCambio= await Hospital.findByIdAndUpdate(id,campos,{new:true});
         return res.status(200).json({ok:true,hospital:hospitalCambio});
     }
     catch(error){
