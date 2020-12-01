@@ -44,7 +44,7 @@ const actualizarMedico = async (req,res)=>{
         const medicoCambio= await Medico.findByIdAndUpdate(id,campos,{new:true});
         return res.status(200).json({ok:true,medico:medicoCambio});
     }
-    catch(error){
+    catch(error){ 
         return res.status(500).json({ok:false,msg:"ocurrio un error"});
     }
 }
