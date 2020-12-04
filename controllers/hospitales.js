@@ -11,7 +11,7 @@ const crearHospital =async (req,res=response)=>{
              usuarioCreo:req.uid,
              ...req.body   
         });
-
+        hospital.img="no-image"
         await hospital.save();
 
         return res.status(200).json({ok:true,hospital:hospital});
@@ -32,6 +32,7 @@ const getHospitales = async (req,res)=>{
 const actualizarHospital = async (req,res)=>{
     try{
         const id=req.params.id;
+        console.log(id);
         const campos={...req.body};
 
         const hospitalDB= await Hospital.findById(id);
@@ -43,6 +44,7 @@ const actualizarHospital = async (req,res)=>{
         return res.status(200).json({ok:true,hospital:hospitalCambio});
     }
     catch(error){
+        console.log(error);
         return res.status(500).json({ok:false,msg:"ocurrio un error"});
     }
 }

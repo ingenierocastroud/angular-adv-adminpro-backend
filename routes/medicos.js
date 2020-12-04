@@ -8,10 +8,12 @@ const {validarCampos} =require('../middlewares/validar-campos');
 const {validarJWT} =require('../middlewares/validar-jwt');
 const router=Router();
 
-const {getMedicos,crearMedico,actualizarMedico}=require('../controllers/medicos');
+const {getMedicos,crearMedico,actualizarMedico,getMedico}=require('../controllers/medicos');
 
 //rutas
 router.get('/',[validarJWT],getMedicos);
+
+router.get('/:id',[validarJWT],getMedico);
 
 router.post('/',
 [       validarJWT,

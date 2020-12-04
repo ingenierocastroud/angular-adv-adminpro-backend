@@ -5,6 +5,7 @@ const path = require('path');
 const fs = require('fs');
 
 const fileUpload = async (req,res)=>{
+    console.log('subir imagen');
     const {tipo,id}=req.params;
 
     const TiposValidos =['hospitales','usuarios','medicos'];
@@ -42,7 +43,7 @@ const fileUpload = async (req,res)=>{
             return res.status(500).send({ok:false,msg:"no se pudo subir el archivo"});
         }         
     
-        return res.status(200).json({ok:true,msg:"archivo subido"});
+        return res.status(200).json({ok:true,nombrearchivo,msg:"archivo subido"});
       });
 }
 

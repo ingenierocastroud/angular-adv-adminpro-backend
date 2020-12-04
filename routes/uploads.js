@@ -17,7 +17,7 @@ router.put('/:tipo/:id',
 
 router.get('/:tipo/:id',
 [
-    validarJWT
+  //  validarJWT
 ]
 ,getFile);
 

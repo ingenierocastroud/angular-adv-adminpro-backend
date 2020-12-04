@@ -35,7 +35,7 @@ const getUsuarios = async (req,res)=>{
 
    const [usuarios,total]= await Promise.all([
         Usuario
-        .find({},'nombre email rol google')
+        .find({},'nombre email role google img')
         .skip(desde)
         .limit(5),
         Usuario.countDocuments()
@@ -58,6 +58,10 @@ const actualizarUsuario = async (req,res)=>{
             if (existeEmail){
                 return res.status(400).json({ok:false,msg:"Correo ya existe"});
             }  
+            //restablece el valor del email para no poder modificarlo ya que es de google
+            if (usuarioDB.google){
+               return res.status(400).json({ok:false,msg:"Correo de google no se puede cambiar"});
+            }
         }
       
         const usuarioCambio= await Usuario.findByIdAndUpdate(uid,campos,{new:true});

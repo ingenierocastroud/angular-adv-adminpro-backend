@@ -2,6 +2,7 @@ const {response}=require('express');
 const jwt=require('jsonwebtoken');
 
 const validarJWT = (req,res=response,next)=>{
+    console.log('validar token');
     const bearerHeader = req.headers['authorization'];
 
     if (!bearerHeader) {
@@ -16,6 +17,8 @@ const validarJWT = (req,res=response,next)=>{
         const bearer = bearerHeader.split(' ');
         const bearerToken = bearer[1];
         const token = bearerToken;
+        console.log('validar token');
+        console.log(token);
         const{uid}=jwt.verify(token,process.env.JWT_SECRET);
         req.uid=uid;
         next();

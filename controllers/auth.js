@@ -60,10 +60,14 @@ const loginGoogle = async (req,res=response)=>{
 const renewToken = async (req,res=response)=>{
     try{
         const uid=req.uid;
+        console.log(uid);
+        const usuarioDB = await Usuario.findById(uid);
+        console.log(usuarioDB);
         const token =await generarToken(uid);
-        return res.status(200).json({ok:true,token});
+        return res.status(200).json({ok:true,token,usuario:usuarioDB});
     }
     catch(error){
+        console.log(error);
         return res.status(500).json({ok:false,msg:"ocurrio un error"});
     }
 }
